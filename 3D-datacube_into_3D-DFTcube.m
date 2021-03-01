@@ -14,4 +14,4 @@ bins_spatial = 2^nextpow2(1000)
 
 datacube = zeros(fastTimeIndex,slowTimeIndex,spatialIndex);
 
-DFTcube = fftn(datacube,[bins_fastTime bins_slowTime bins_spatial]);
+FFTcube = fftn(datacube,[bins_fastTime bins_slowTime bins_spatial]);
