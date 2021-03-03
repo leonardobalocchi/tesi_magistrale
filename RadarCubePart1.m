@@ -39,7 +39,7 @@ prf = waveform.PRF;
 TX=phased.Transmitter('Gain',20);
 %% Target Specs
 TgtModel=phased.RadarTarget;
-tgtPos=[10e3*sqrt(3);10e3;0];              % Target at 20 km distance, 30 degree azimuth
+tgtPos=[100*sqrt(3);100;0];              % Target at 20 km distance, 30 degree azimuth
 tgtVel=[75*sqrt(3);75;0];                  % Radial velocity is 150 m/sec
 %% Platform Specs
 % Target with constant velocity (and null acceleration)
@@ -85,7 +85,11 @@ end
 
 t = (0:nPulses*nSamples-1)/waveform.SampleRate;
 y = abs(datacube(:,1,:));
+figure
 plot(t,y(:));title('Reflected Target Return (One Channel)'); xlabel('Time (sec)'); ylabel('Magnitude')
+z = abs(datacube(:,2,:));
+figure
+plot(t,z(:));title('Reflected Target Return (Two Channel)'); xlabel('Time (sec)'); ylabel('Magnitude')
 
 %%
 
