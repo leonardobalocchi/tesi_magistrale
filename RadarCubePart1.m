@@ -15,12 +15,13 @@
 
 %% ULA Specs : 8 Element Uniform Linear Array with Cosine Antenna Element
 antenna=phased.ULA;
-antenna.NumElements = 8;   
+antenna.NumElements = 8;
+antenna.ElementSpacing = 0.0039;
 cosineElement = phased.CosineAntennaElement;
 antenna.Element = cosineElement;
 
 viewArray(antenna);
-pattern(antenna,300e6,-180:180,0,...
+pattern(antenna,77e9,-180:180,0,...
     'Type','directivity',...
     'PropagationSpeed',3e8)
 %% Waveform Specs
