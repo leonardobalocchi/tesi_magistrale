@@ -1,4 +1,4 @@
-% data la matrice del datacube il codice dovr√† eseguire DTFT lungo le tre
+% data la matrice del datacube il codice dovr‡† eseguire DTFT lungo le tre
 % direzioni della matrice
 clear
 clc
