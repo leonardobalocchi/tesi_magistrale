@@ -1,4 +1,5 @@
-clc
+%% System definition
+clc 
 close all
 clearvars
 
@@ -10,10 +11,19 @@ lightSpeed=299792458; % m/s
 wavelength=lightSpeed/centerFreq; % m
 receiverChannels=8;
 chirpCycles=20000;
-fastTimeSamples=50000; % sample
+fastTimeSamples=256; % sample
 fastTimeRate=fastTimeSamples/sweepTime; % sample/s
+tiltAngle=deg2rad(50);
 
-% Antenna definition
+% Absolute maximum values
+maximumRange=['The maximum range is: ',num2str(lightSpeed*fastTimeSamples/4/bandwidth),' m'];
+disp(maximumRange)
+maximumSpacing=['The maximum spacing for antenna elements is: ',num2str(lightSpeed/2/centerFreq*1e3),' mm'];
+disp(maximumSpacing)
+maximumTargetVelocity=['The maximum target velocity is: ',num2str(lightSpeed/4/centerFreq/sweepTime/cos(tiltAngle)),' m/s'];
+disp(maximumTargetVelocity)
+
+%% Antenna definition
 antenna=phased.ULA; % Uniform Linear Array
 antenna.NumElements=receiverChannels;
 antenna.Element=phased.CosineAntennaElement; 
@@ -40,3 +50,15 @@ timeAxis=(0:numSamples-1)/fastTimeRate;
 figure('Name','Radar waveform')
 plot(timeAxis,real(waveform),'.');title('Radar Waveform'); xlabel('Time (sec)'); ylabel('Amplitude')
 prf = waveform.PRF;
+%%
+figure('Name','Spectrogram')
+spectrogram(waveform,'yaxis') % to be fixed
+
+%% Transmitter
+TX=phased.Transmitter('Gain',20);
+
+%% Target Specs
+targetRCS=0.1;
+TgtModel=phased.RadarTarget;
+tgtPos=[100*sqrt(3);100;0];              % Target at 20 km distance, 30 degree azimuth
+tgtVel=[75*sqrt(3);75;0];                  % Radial velocity is 150 m/sec
